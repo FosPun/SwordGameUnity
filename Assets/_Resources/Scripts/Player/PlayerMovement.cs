@@ -1,23 +1,28 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 
 public class PlayerMovement : MonoBehaviour
 {
+    public UnityEvent OnJump;
+    
+    
+    [HideInInspector] public bool isMoving;
+    
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float rotationSpeed;
     
-    //Components
     private Rigidbody rb;
     
     private InputAction move;
     private InputAction jump;
 
-    private Vector2 moveValue;
     private bool jumpTrigger;
     private bool isGrounded;
-    void Start()
+    private Vector2 moveValue;
+    void Awake()
     {
         move = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
@@ -26,9 +31,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        GetInputValue();
-        
-        if (jump.IsPressed()) { jumpTrigger = true;}
+        GetInput();
     }
 
     private void FixedUpdate()
@@ -38,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         Movement();
     }
 
-    private void GetInputValue()
+    private void GetInput()
     {
         moveValue = move.ReadValue<Vector2>();
         jumpTrigger = jump.IsPressed();
@@ -46,12 +49,12 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         rb.linearVelocity = new Vector2(moveValue.x * speed, rb.linearVelocity.y);
-        
+        isMoving = moveValue.x != 0 ? true : false;
     }
-
     private void Jump()
     {
         if (!jumpTrigger || !isGrounded ) return;
+        OnJump?.Invoke();
         isGrounded = false;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x,jumpPower);
     }   
