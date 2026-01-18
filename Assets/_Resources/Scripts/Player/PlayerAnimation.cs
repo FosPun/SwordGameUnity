@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerAnimation : MonoBehaviour
 {
@@ -15,6 +14,6 @@ public class PlayerAnimation : MonoBehaviour
     private void Update()
     {
         animator.SetBool("isMoving", playerMovement.isMoving);
-        
+        animator.SetBool("isGround", playerMovement.isGrounded);
     }
 }

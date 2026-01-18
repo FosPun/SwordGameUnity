@@ -1,24 +1,33 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackArea : MonoBehaviour
-{
-    public List<IDamagale> Damagables { get; } = new();
+{ 
+    public int Damage;
     
+    [SerializeField] private Collider _collider;
+
+
+ 
+
     private void OnTriggerEnter(Collider other)
     {
         var damagable = other.GetComponent<IDamagale>();
         if (damagable != null)
         {
-            Damagables.Add(damagable);
+            damagable.TakeDamage(Damage);
         }
     }
-    private void OnTriggerExit(Collider other)
+
+
+    public void ActivateCollider()
     {
-        var damagable = other.GetComponent<IDamagale>();
-        if (damagable != null && Damagables.Contains(damagable))
-        {
-            Damagables.Remove(damagable);
-        }
+        _collider.enabled = true;
+    }
+
+    public void DeactivateCollider()
+    {
+        _collider.enabled = false;
     }
 }

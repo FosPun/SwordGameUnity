@@ -1,54 +1,76 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
-public abstract class Enemy : MonoBehaviour
-{       
+public class Enemy : MonoBehaviour
+{
+        private EnemyStateMachine _enemyStateMachine;
+        public EnemyStateMachine EnemyStateMachine => _enemyStateMachine;
 
-        [SerializeField] private AttackArea attackArea;
-        [SerializeField] protected Transform target;
-        [SerializeField] protected int damage;
-        [SerializeField] protected float distanceToAttack;
+        public UnityEvent OnAttack;
+        public GameObject target;
+
+        public float DistanceForFollowTarget = 5f;
+        public float DistanceForLostTarget = 10f;
+        public float distanceToAttack = 1f;
         
-        protected NavMeshAgent navMeshAgent;
-        protected Animator animator;
+        [SerializeField] private int damage;
+        [SerializeField] private int attackCooldown;
+        
+        [HideInInspector] public NavMeshAgent navMeshAgent;
+        [HideInInspector] public Collider collider;
+        [HideInInspector] public Health health;
+        [HideInInspector] public Health targetHealth;
+        [HideInInspector] public Animator animator;
+        
+        private AttackArea attackArea;
+        
         protected bool isAttacking;
-        private Health health;
         
         private void Awake()
         {
-            navMeshAgent = GetComponent<NavMeshAgent>();
+            target = GameObject.FindGameObjectWithTag("Player");
             animator = GetComponent<Animator>();
+            attackArea = GetComponent<AttackArea>();
+            navMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
+            targetHealth = target.GetComponent<Health>();
+            collider = GetComponent<Collider>();
+        }
+
+        private void Start()
+        {
+            _enemyStateMachine = new EnemyStateMachine(this);
+            _enemyStateMachine.Initialize(_enemyStateMachine.IdleState);
+
         }
 
         private void FixedUpdate()
         {
-            FollowTarget();
-            Attack();
-        }
-
-        public void TakeDamage(int damageAmount)
-        {
-            if (health != null)
-            {
-                health.TakeDamage(damageAmount);
-                Debug.Log(damageAmount);
-            }
+            _enemyStateMachine.Execute();
         }
         
-        protected IEnumerator Hit()
+        public void Deactivate()
+        {
+            _enemyStateMachine.Transition(EnemyStateMachine.DeadState);
+        }
+        public void Attack()
+        {
+            if (isAttacking) return;
+            OnAttack?.Invoke();
+            StartCoroutine(Hit());
+        }
+        
+        private IEnumerator Hit()
         {
             isAttacking = true;
-            foreach (var damagables in attackArea.Damagables)
-            {
-                damagables.TakeDamage(damage);
-            }
-            yield return new WaitForSeconds(1f); 
+            yield return new WaitForSeconds(attackCooldown); 
             isAttacking = false;
         }
-
-        protected abstract void FollowTarget();
-        protected abstract void Attack();
+        public float CalculateDistanceToTarget()
+        {
+            return Vector3.Distance(transform.position,target.transform.position);
+        }
 
 }

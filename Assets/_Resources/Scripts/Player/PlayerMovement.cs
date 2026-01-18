@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public UnityEvent OnJump;
     
     
+    [HideInInspector] public bool isGrounded;
     [HideInInspector] public bool isMoving;
     
     [SerializeField] private float speed;
@@ -19,8 +21,9 @@ public class PlayerMovement : MonoBehaviour
     private InputAction move;
     private InputAction jump;
 
+    private bool canMove = true;
     private bool jumpTrigger;
-    private bool isGrounded;
+    
     private Vector2 moveValue;
     void Awake()
     {
@@ -36,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(!canMove) return;
         Jump();
         Rotation();
         Movement();
@@ -70,8 +74,23 @@ public class PlayerMovement : MonoBehaviour
         rb.MoveRotation(targetRotation);
     }
 
+    public void SwitchMovement()
+    {
+        canMove = !canMove;
+    }
     private void OnCollisionEnter(Collision other)
     {
-        isGrounded = true;
+        if(LayerMask.LayerToName(other.gameObject.layer) == "Ground")
+        {
+            isGrounded = true;
+        }
+    }
+
+    private void OnCollisionExit(Collision other)
+    {
+        if(LayerMask.LayerToName(other.gameObject.layer) == "Ground")
+        {
+            isGrounded = false;
+        } 
     }
 }

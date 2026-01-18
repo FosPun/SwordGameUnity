@@ -38,13 +38,8 @@ public class PlayerAttack : MonoBehaviour
 //ToDo Add timings, cooldowns, animations 
     private IEnumerator Hit()
     {
-        
         isAttacking = true;
-        
-        foreach (var damagables in attackArea.Damagables)
-        {
-          damagables.TakeDamage(damage);
-        }
+        attackArea.Damage = damage;
         yield return new WaitForSeconds(1f); 
         isAttacking = false;
     }
