@@ -6,12 +6,13 @@ using UnityEngine.InputSystem;
 public class PlayerAttack : MonoBehaviour
 {
     public UnityEvent OnAttack;
+    
     [SerializeField] private int damage;
     [SerializeField] private AttackArea attackArea;
     
-    private InputAction attack;
     private bool attackTrigger;
     private bool isAttacking;
+    private InputAction attack;
     
     
     void Awake()

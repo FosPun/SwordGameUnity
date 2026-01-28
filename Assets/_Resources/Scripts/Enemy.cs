@@ -2,39 +2,37 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class Enemy : MonoBehaviour
 {
-        private EnemyStateMachine _enemyStateMachine;
+        public UnityEvent OnAttack;
+        
         public EnemyStateMachine EnemyStateMachine => _enemyStateMachine;
 
-        public UnityEvent OnAttack;
         public GameObject target;
 
         public float DistanceForFollowTarget = 5f;
         public float DistanceForLostTarget = 10f;
         public float distanceToAttack = 1f;
         
-        [SerializeField] private int damage;
-        [SerializeField] private int attackCooldown;
+        public float attackDuration;
+
+        public bool isAttacking { get; private set; }
         
         [HideInInspector] public NavMeshAgent navMeshAgent;
         [HideInInspector] public Collider collider;
-        [HideInInspector] public Health health;
         [HideInInspector] public Health targetHealth;
         [HideInInspector] public Animator animator;
         
-        private AttackArea attackArea;
+        private EnemyStateMachine _enemyStateMachine;
         
-        protected bool isAttacking;
         
         private void Awake()
         {
             target = GameObject.FindGameObjectWithTag("Player");
             animator = GetComponent<Animator>();
-            attackArea = GetComponent<AttackArea>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            health = GetComponent<Health>();
             targetHealth = target.GetComponent<Health>();
             collider = GetComponent<Collider>();
         }
@@ -58,14 +56,14 @@ public class Enemy : MonoBehaviour
         public void Attack()
         {
             if (isAttacking) return;
-            OnAttack?.Invoke();
             StartCoroutine(Hit());
         }
         
         private IEnumerator Hit()
         {
             isAttacking = true;
-            yield return new WaitForSeconds(attackCooldown); 
+            OnAttack?.Invoke();
+            yield return new WaitForSeconds(attackDuration); 
             isAttacking = false;
         }
         public float CalculateDistanceToTarget()

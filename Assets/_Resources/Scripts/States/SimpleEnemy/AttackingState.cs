@@ -13,21 +13,19 @@ namespace _Resources.Scripts.States.SimpleEnemy
         public void Enter()
         {
             Debug.Log(enemy.gameObject.name + " is attacking");
+            enemy.transform.LookAt(enemy.target.transform);
+            enemy.Attack();
         }
 
         public void Execute()
         {
-            if (enemy.targetHealth.isDead)
+            if (!enemy.isAttacking)
             {
-                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.IdleState);
-            }
-            enemy.Attack();
-            if (enemy.CalculateDistanceToTarget() > enemy.distanceToAttack)
-            {
-                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.FollowState);
+                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.AttackingState);
             }
         }
 
+        
         public void Exit()
         {
             

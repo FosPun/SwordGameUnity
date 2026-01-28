@@ -279,7 +279,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2ee7d2ed1f424a47a67bd0dbe5ceb84, type: 2}
+  - {fileID: 2100000, guid: b50bcf91df5c3734cb2537518c768185, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -583,7 +583,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3553201110190791876
 Transform:
   m_ObjectHideFlags: 0
@@ -1328,7 +1328,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bfb0835dcb5653d40956a4576b667f2d, type: 2}
+  - {fileID: 2100000, guid: edcd73e9090b6504a92968eb056bd6c8, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2054,7 +2054,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2ee7d2ed1f424a47a67bd0dbe5ceb84, type: 2}
+  - {fileID: 2100000, guid: b861e338f20d31140a1e04816f0a4484, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2846,7 +2846,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: bfb0835dcb5653d40956a4576b667f2d, type: 2}
+  - {fileID: 2100000, guid: b8cf07e4dd4d78346b3aa2d9a84e7546, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3230,6 +3230,37 @@ Transform:
   m_Children:
   - {fileID: 7936148945799415524}
   m_Father: {fileID: 5601202981098089768}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4769932690516845947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5654006508426795057}
+  m_Layer: 7
+  m_Name: Spawn Projectile Position
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5654006508426795057
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4769932690516845947}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.0000000070230755, y: 1.491054, z: 1.0192415}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3914035642806618352}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4834862873473537197
 GameObject:
@@ -5159,7 +5190,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f2ee7d2ed1f424a47a67bd0dbe5ceb84, type: 2}
+  - {fileID: 2100000, guid: 31bd4196900453b43932331aa2ebef53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -5623,6 +5654,14 @@ PrefabInstance:
       value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 509470340914095471, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: m_BaseOffset
+      value: -0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 509470340914095471, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 100000
+      objectReference: {fileID: 0}
+    - target: {fileID: 509470340914095471, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_StoppingDistance
       value: 17
       objectReference: {fileID: 0}
@@ -5630,9 +5669,13 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 22100000, guid: 58f64f6e4cefe9c488ef7476b437137a, type: 2}
+    - target: {fileID: 2295222929066068471, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: m_Height
+      value: 1.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.24805
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5640,7 +5683,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.29949
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5679,6 +5722,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: attackDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: distanceToAttack
       value: 16
       objectReference: {fileID: 0}
@@ -5710,6 +5757,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3629300476902175957}
+    - targetCorrespondingSourceObject: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5654006508426795057}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3743066359732667779, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       insertIndex: -1
@@ -5736,8 +5786,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   projectilePrefab: {fileID: 8989132911170028507, guid: 704c2d6433af4d448943d5ff30b6d7ae, type: 3}
-  prefabVelocity: 1000
-  prefabSpawnPosition: {fileID: 3638133673338649416}
+  prefabVelocity: 8
+  prefabSpawnPosition: {fileID: 5654006508426795057}
   collectionCheck: 1
   defaultCapacity: 3
   maxSize: 5

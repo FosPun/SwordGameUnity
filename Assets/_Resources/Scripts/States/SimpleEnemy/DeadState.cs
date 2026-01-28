@@ -11,8 +11,8 @@ namespace _Resources.Scripts.States.SimpleEnemy
         public void Enter()
         {
             _enemy.navMeshAgent.isStopped = true;
-            _enemy.animator.SetBool("isDead", true);
             _enemy.collider.enabled = false;
+            _enemy.animator.SetBool("isDead", true);
         }
 
         public void Execute()

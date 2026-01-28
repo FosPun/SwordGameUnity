@@ -30,7 +30,6 @@ public class ProjectileSpawner : MonoBehaviour
     private void Awake()
     {
         objectPool = new ObjectPool<Projectile>(CreateObject,OnGetFromPool,OnReleaseToPool,OnDestroyPooledObject, collectionCheck,defaultCapacity,maxSize);
-        CreateObject();
     }
 
     private Projectile CreateObject()
@@ -47,6 +46,14 @@ public class ProjectileSpawner : MonoBehaviour
 
     private void OnGetFromPool(Projectile objectToGet)
     {
+        var rb = objectToGet.GetComponent<Rigidbody>();
+        
+        rb.position = prefabSpawnPosition.position;
+        rb.rotation = prefabSpawnPosition.rotation;
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+        objectToGet.transform.SetPositionAndRotation(prefabSpawnPosition.position, prefabSpawnPosition.rotation);
+        
         objectToGet.gameObject.SetActive(true);
     }
 
@@ -59,11 +66,7 @@ public class ProjectileSpawner : MonoBehaviour
     {
         Projectile projectileObject = objectPool.Get();
         
-        projectileObject.transform.SetPositionAndRotation(prefabSpawnPosition.position, prefabSpawnPosition.rotation);
-        
-        projectileObject.GetComponent<Rigidbody>().AddForce(projectileObject.transform.forward * prefabVelocity, ForceMode.Acceleration);
-        
-        projectileObject.Deactivate();
+        projectileObject.GetComponent<Rigidbody>().AddForce(projectileObject.transform.forward * prefabVelocity, ForceMode.Impulse);
         
         OnShoot?.Invoke();
     }

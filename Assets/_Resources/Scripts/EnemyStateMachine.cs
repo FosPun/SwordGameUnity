@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using _Resources.Scripts.States.SimpleEnemy;
+using UnityEngine;
 
 public class EnemyStateMachine 
 {
@@ -36,7 +38,6 @@ public class EnemyStateMachine
         
         OnStateChanged?.Invoke(nextState);
     }
-
     public void Execute()
     {
         if (CurrentState != null)

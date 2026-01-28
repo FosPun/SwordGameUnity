@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,10 +8,11 @@ public class Health : MonoBehaviour, IDamagale
     public UnityEvent OnDie;
     
     public bool isDead { get ; private set ; }
-    
     [SerializeField] private int health = 100;
     [Tooltip("Time for die animation.")]
     [SerializeField] private float dieDuration = 2f;
+    
+    private bool canDamage = true;
     
     private void DecreaseHealth(int damage)
     {
@@ -23,12 +25,23 @@ public class Health : MonoBehaviour, IDamagale
 
     public void TakeDamage(int damageAmount)
     {
-        if (health <= 0) return;
+        if (health <= 0 || !canDamage) return;
         OnDamaged?.Invoke();
         DecreaseHealth(damageAmount);
     }
 
-    public void Die()
+    public void MakeImmune(float time = 1f)
+    {
+        StartCoroutine(MakeImmuneCoroutine(time));
+    }
+
+    private IEnumerator MakeImmuneCoroutine(float time)
+    {
+        canDamage = false;
+        yield return new WaitForSeconds(time);
+        canDamage = true;
+    }
+    private void Die()
     {
         OnDie?.Invoke();
         isDead = true;

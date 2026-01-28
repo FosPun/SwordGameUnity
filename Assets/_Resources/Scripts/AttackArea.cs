@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.Events;
 
 public class AttackArea : MonoBehaviour
-{ 
+{
+    public UnityEvent OnHit;
     public int Damage;
     
     [SerializeField] private Collider _collider;
-
-
- 
-
+    
     private void OnTriggerEnter(Collider other)
     {
         var damagable = other.GetComponent<IDamagale>();
@@ -18,8 +16,9 @@ public class AttackArea : MonoBehaviour
         {
             damagable.TakeDamage(Damage);
         }
+        OnHit?.Invoke(); 
     }
-
+    
 
     public void ActivateCollider()
     {
