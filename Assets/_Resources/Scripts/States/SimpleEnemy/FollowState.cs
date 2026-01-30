@@ -21,7 +21,7 @@ public class FollowState : IState
             
             enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.AttackingState);
         }
-        else if  (enemy.targetHealth.isDead)
+        else if  (enemy.targetHealth.isDead || enemy.CalculateDistanceToTarget() > enemy.DistanceForLostTarget)
         {
             enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.IdleState);
         }

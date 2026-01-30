@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,23 +7,17 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public UnityEvent OnJump;
-    public UnityEvent OnDodge;
     
     
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isMoving;
-    [HideInInspector] public bool isDodging;
     [HideInInspector] public bool jumpTrigger;
-    [HideInInspector] public float dodgeCooldownTime;
     
     [Header("Parameters for movement and jump")]
     [SerializeField] private float speed;
     [SerializeField] private float jumpPower;
     [SerializeField] private float rotationSpeed;
-    [Header("Parameters for Dodge")]
-    [SerializeField] private float dodgeDuration;
-    [SerializeField] private float dodgeDistance;
-    [SerializeField] private float dodgeCooldown = 5f;
+    
     [Header("Parameters for checking Ground")]
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float groundCheckRadius = 0.2f;
@@ -34,14 +27,11 @@ public class PlayerMovement : MonoBehaviour
     
     
     private Rigidbody rb;
-    private Collider collider;
     
     private InputAction move;
     private InputAction jump;
-    private InputAction crouch;
 
     private bool canMove = true;
-    private bool crouchKeyDown;
     
     private Vector2 moveValue;
     
@@ -51,28 +41,33 @@ public class PlayerMovement : MonoBehaviour
     {
         move = InputSystem.actions.FindAction("Move");
         jump = InputSystem.actions.FindAction("Jump");
-        crouch = InputSystem.actions.FindAction("Crouch");
         rb = GetComponent<Rigidbody>();
-        collider = GetComponent<Collider>();
-        dodgeCooldownTime = dodgeCooldown;
     }
 
     void Update()
     {
         GetInput();
-       
     }
 
     private void FixedUpdate()
     {
         CheckGround();
+        
+        if(!canMove) return;
         Jump();
         Rotation();
-        Movement();
-        Dodge();
-        DodgeCooldown();
+        Move();
     }
 
+    public void SwitchMovement()
+    {
+        canMove = !canMove;
+
+    }
+    public void HitStun(float timeDelay)
+    {
+        StartCoroutine(HitStunCoroutine(timeDelay));
+    }
 
     private void CheckGround()
     {
@@ -80,28 +75,32 @@ public class PlayerMovement : MonoBehaviour
         isGrounded = groundColliders.Length > 0;
     }
 
+    
     private void GetInput()
     {
         moveValue = move.ReadValue<Vector2>();
         jumpTrigger = jump.IsPressed();
-        crouchKeyDown = crouch.IsPressed();
     }
     
-    private void Movement()
+    private void Move()
     {
-        if(!canMove || !isGrounded) return;
-        rb.linearVelocity = new Vector2(moveValue.x * speed, rb.linearVelocity.y);
-        isMoving = moveValue.x != 0 ? true : false;
+        float targetSpeed = speed * moveValue.x;
+        float speedAmount = targetSpeed - rb.linearVelocity.x;
+        rb.AddForce( Vector2.right * speedAmount , ForceMode.VelocityChange);
+        isMoving = Mathf.Abs(moveValue.x) > 0.01f;
+
     }
     private void Jump()
     {
-        if (!jumpTrigger || !isGrounded) return;
-        rb.linearVelocity = new Vector2(rb.linearVelocity.x,jumpPower);
+        if (!isGrounded || !jumpTrigger) return;
+        rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
+        rb.AddForce( Vector2.up * jumpPower ,ForceMode.Impulse);
         OnJump?.Invoke();
-    }   
+    }
+    
     private void Rotation()
     {
-        if (Mathf.Abs(moveValue.x) < 0.1f) return;
+        if (Mathf.Abs(moveValue.x) < 0.1f || !canMove) return;
         
         float targetY = moveValue.x > 0 ? 0f : 180f;
 
@@ -109,53 +108,13 @@ public class PlayerMovement : MonoBehaviour
 
         rb.MoveRotation(targetRotation);
     }
-    private void DodgeCooldown()
-    {
-        if(dodgeCooldownTime >= dodgeCooldown) return;
-        dodgeCooldownTime += Time.fixedDeltaTime;
-    }
-
-    private void Dodge()
-    {
-        if(!crouchKeyDown || isDodging || dodgeCooldownTime < dodgeCooldown) return;
-        dodgeCooldownTime = 0;
-        StartCoroutine(DodgeCoroutine());
-    }
     
-    public void FullStop()
-    {
-        rb.linearVelocity = Vector3.zero;
-        StopAllCoroutines();
-        canMove = false;
-    }
-    public void HitStun(float timeDelay)
-    {
-        StartCoroutine(HitStunCoroutine(timeDelay));
-    }
-    private IEnumerator DodgeCoroutine()
-    {
-        OnDodge?.Invoke();
-        model.SetActive(false);
-        isDodging = true;
-        canMove = false;
-        
-        collider.excludeLayers += LayerMask.GetMask("Enemy","Projectile");
-        
-        rb.linearVelocity =  Vector3.zero;
-        rb.linearVelocity = new Vector2(transform.right.x * dodgeDistance, rb.linearVelocity.y);
-        
-        yield return new WaitForSeconds(dodgeDuration);
-        model.SetActive(true);
-        canMove = true;
-        isDodging = false;
-        collider.excludeLayers -= LayerMask.GetMask("Enemy", "Projectile");
-    }
     private IEnumerator HitStunCoroutine(float time)
     {
         rb.linearVelocity = Vector3.zero;
-        canMove = false;
+        SwitchMovement();
         yield return new WaitForSeconds(time);
-        canMove = true;
+        SwitchMovement();    
     }
 
     private void OnDrawGizmos()

@@ -14,14 +14,18 @@ namespace _Resources.Scripts.States.SimpleEnemy
         {
             Debug.Log(enemy.gameObject.name + " is attacking");
             enemy.transform.LookAt(enemy.target.transform);
-            enemy.Attack();
         }
 
         public void Execute()
         {
             if (!enemy.isAttacking)
             {
-                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.AttackingState);
+                enemy.Attack();
+            }
+
+            if (enemy.CalculateDistanceToTarget() > enemy.distanceToAttack || enemy.targetHealth.isDead)
+            {
+                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.FollowState);
             }
         }
 

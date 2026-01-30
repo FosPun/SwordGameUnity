@@ -29,21 +29,10 @@ public class Health : MonoBehaviour, IDamagale
         OnDamaged?.Invoke();
         DecreaseHealth(damageAmount);
     }
-
-    public void MakeImmune(float time = 1f)
-    {
-        StartCoroutine(MakeImmuneCoroutine(time));
-    }
-
-    private IEnumerator MakeImmuneCoroutine(float time)
-    {
-        canDamage = false;
-        yield return new WaitForSeconds(time);
-        canDamage = true;
-    }
+    
     private void Die()
     {
-        OnDie?.Invoke();
         isDead = true;
+        OnDie?.Invoke();
     }
 }
