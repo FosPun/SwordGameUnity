@@ -16,18 +16,18 @@ public class FollowState : IState
     public void Execute()
     {
         
-        if(enemy.CalculateDistanceToTarget() < enemy.distanceToAttack && !enemy.targetHealth.isDead)
+        if(enemy.CalculateDistanceToTarget() < enemy.enemySO.DistanceToAttack && !enemy.targetHealth.isDead)
         {
             
             enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.AttackingState);
         }
-        else if  (enemy.targetHealth.isDead || enemy.CalculateDistanceToTarget() > enemy.DistanceForLostTarget)
+        else if  (enemy.targetHealth.isDead || enemy.CalculateDistanceToTarget() > enemy.enemySO.DistanceForLostTarget)
         {
             enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.IdleState);
         }
         else
         {
-            enemy.navMeshAgent.SetDestination(enemy.target.transform.position);
+            enemy.navMeshAgent.SetDestination(enemy.Target.transform.position);
 
         }
         

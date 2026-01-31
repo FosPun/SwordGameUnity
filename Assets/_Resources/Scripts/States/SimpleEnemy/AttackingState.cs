@@ -13,26 +13,29 @@ namespace _Resources.Scripts.States.SimpleEnemy
         public void Enter()
         {
             Debug.Log(enemy.gameObject.name + " is attacking");
-            enemy.transform.LookAt(enemy.target.transform);
+            enemy.transform.LookAt(enemy.Target.transform);
         }
 
         public void Execute()
         {
-            if (!enemy.isAttacking)
+            
+            switch (enemy.CalculateDistanceToTarget() < enemy.enemySO.DistanceToAttack && !enemy.targetHealth.isDead)
             {
-                enemy.Attack();
-            }
+                case true:
+                    enemy.Attack();
+                    break;
+                case false:
+                    if(enemy.isAttacking) return;
+                    enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.FollowState);
+                    break;
 
-            if (enemy.CalculateDistanceToTarget() > enemy.distanceToAttack || enemy.targetHealth.isDead)
-            {
-                enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.FollowState);
             }
         }
 
         
         public void Exit()
         {
-            
+            Debug.Log(enemy.gameObject.name + " exit attacking");
         }
     }
 }

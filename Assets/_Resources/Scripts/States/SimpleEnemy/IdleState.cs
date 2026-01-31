@@ -15,7 +15,7 @@ public class IdleState : IState
 
     public void Execute()
     {
-        if (enemy.CalculateDistanceToTarget() < enemy.DistanceForFollowTarget && !enemy.targetHealth.isDead)
+        if (enemy.CalculateDistanceToTarget() < enemy.enemySO.DistanceForFollowTarget && !enemy.targetHealth.isDead)
         {  
             enemy.EnemyStateMachine.Transition(enemy.EnemyStateMachine.FollowState);
         }

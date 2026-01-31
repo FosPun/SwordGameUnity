@@ -5718,6 +5718,10 @@ PrefabInstance:
       value: Range Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: 224c109d6e0f90b43b9b46f85ab527d1, type: 2}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: attackCooldown
       value: 2
       objectReference: {fileID: 0}

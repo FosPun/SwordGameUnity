@@ -199,6 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b1928da7c4458084b5d760cca9546d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemy
+  enemySO: {fileID: 11400000, guid: 7aed39a4855193d4bb3bb6ac11ad06da, type: 2}
   OnAttack:
     m_PersistentCalls:
       m_Calls:
@@ -214,11 +215,7 @@ MonoBehaviour:
           m_StringArgument: Attack
           m_BoolArgument: 0
         m_CallState: 2
-  target: {fileID: 0}
-  DistanceForFollowTarget: 5
-  DistanceForLostTarget: 10
-  distanceToAttack: 1
-  attackDuration: 0
+  Target: {fileID: 0}
   navMeshAgent: {fileID: 0}
   collider: {fileID: 0}
   targetHealth: {fileID: 0}

@@ -7,34 +7,27 @@ using UnityEngine.Serialization;
 public class Enemy : MonoBehaviour
 {
         public UnityEvent OnAttack;
-        
+        public EnemySO enemySO;
+        public GameObject Target;
         public EnemyStateMachine EnemyStateMachine => _enemyStateMachine;
-
-        public GameObject target;
-
-        public float DistanceForFollowTarget = 5f;
-        public float DistanceForLostTarget = 10f;
-        public float distanceToAttack = 1f;
-        
-        public float attackDuration;
-
         public bool isAttacking { get; private set; }
-        
+
         [HideInInspector] public NavMeshAgent navMeshAgent;
         [HideInInspector] public Collider collider;
         [HideInInspector] public Health targetHealth;
         [HideInInspector] public Animator animator;
         
         private EnemyStateMachine _enemyStateMachine;
-        
-        
+
+
         private void Awake()
         {
-            target = GameObject.FindGameObjectWithTag("Player");
+            Target = GameObject.FindGameObjectWithTag("Player");
             animator = GetComponent<Animator>();
             navMeshAgent = GetComponent<NavMeshAgent>();
-            targetHealth = target.GetComponent<Health>();
+            targetHealth = Target.GetComponent<Health>();
             collider = GetComponent<Collider>();
+            navMeshAgent.stoppingDistance = enemySO.DistanceToAttack;
         }
 
         private void Start()
@@ -63,12 +56,12 @@ public class Enemy : MonoBehaviour
         {
             isAttacking = true;
             OnAttack?.Invoke();
-            yield return new WaitForSeconds(attackDuration); 
+            yield return new WaitForSeconds(enemySO.attackDuration); 
             isAttacking = false;
         }
         public float CalculateDistanceToTarget()
         {
-            return Vector3.Distance(transform.position,target.transform.position);
+            return Vector3.Distance(transform.position,Target.transform.position);
         }
 
 }

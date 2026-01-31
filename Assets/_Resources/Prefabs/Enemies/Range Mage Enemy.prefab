@@ -1564,6 +1564,10 @@ PrefabInstance:
       value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2556027061866628722, guid: c4b96ee1e9e1b3941a1debb719cbf5a1, type: 3}
+      propertyPath: enemySO
+      value: 
+      objectReference: {fileID: 11400000, guid: e16e5a469dca2c24cb60b42203b69897, type: 2}
+    - target: {fileID: 2556027061866628722, guid: c4b96ee1e9e1b3941a1debb719cbf5a1, type: 3}
       propertyPath: attackDuration
       value: 4
       objectReference: {fileID: 0}

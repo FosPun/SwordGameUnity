@@ -44,7 +44,7 @@ public abstract class Ability : MonoBehaviour
 
     private void ReduceCooldown()
     {
-        if (Timer > cooldownTime) return;
+        if (Timer > cooldownTime + Time.fixedDeltaTime) return;
         CooldownPercentage = Timer / cooldownTime;
         Timer += Time.deltaTime;
     }

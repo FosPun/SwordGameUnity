@@ -9,6 +9,7 @@ public class ReloadBar : MonoBehaviour
 
    private void FixedUpdate()
    {
+      imgBar.enabled = !(imgBar.fillAmount >= 1);
       imgBar.fillAmount = ability.CooldownPercentage;
    }
 }
