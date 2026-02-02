@@ -6,28 +6,31 @@ public class Dodge : Ability
 
     [SerializeField] private GameObject model;
     
-    private Collider collider;
+    private Collider _collider;
+    private Rigidbody _rigidbody;
+
     
     protected override void Init()
     {
-        collider = GetComponent<Collider>();
+        _collider = GetComponent<Collider>();
+        _rigidbody = GetComponent<Rigidbody>();
     }
     protected override void UseAbility()
     {
-        if (!abilityTrigger || isActive || Timer < cooldownTime) return;
+        if(!_playerMovement.isGrounded) return;
+        OnAbilityUse?.Invoke();
         Timer = 0;
         StartCoroutine(DodgeCoroutine());
     }
     private IEnumerator DodgeCoroutine()
     {
-        OnAbilityUse?.Invoke();
-        model.SetActive(false);
-        isActive = true;
         
-        collider.excludeLayers += LayerMask.GetMask("Enemy","Projectile");
+        isActive = true;
+        _rigidbody.isKinematic = true;
+        _collider.excludeLayers += LayerMask.GetMask("Enemy","Projectile");
         yield return new WaitForSeconds(duration);
-        model.SetActive(true);
+        _rigidbody.isKinematic = false;
         isActive = false;
-        collider.excludeLayers -= LayerMask.GetMask("Enemy", "Projectile");
+        _collider.excludeLayers -= LayerMask.GetMask("Enemy", "Projectile");
     }
 }

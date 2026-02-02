@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   DistanceForFollowTarget: 7
   DistanceForLostTarget: 9
-  DistanceToAttack: 2
+  DistanceToAttack: 3
   attackDuration: 1

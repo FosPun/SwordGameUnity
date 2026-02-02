@@ -13,7 +13,7 @@ public class PlayerAttack : MonoBehaviour
     private bool attackTrigger;
     private bool isAttacking;
     private InputAction attack;
-    
+    private Health health;
     
     void Awake()
     {

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0ec649b5751e2b418806b9eedccb788, type: 3}
+  m_Name: GrassSO
+  m_EditorClassIdentifier: Assembly-CSharp::GroundSO
+  groundTag: Grass
+  clips:
+  - {fileID: 8300000, guid: 3ed4bd9b6be044c499f82ac38893c438, type: 3}
+  - {fileID: 8300000, guid: ba1c5c674d66215478d5e4fd725f4a8d, type: 3}
+  - {fileID: 8300000, guid: 4bf8fc6efebb6cc4e952005bad29393d, type: 3}
+  - {fileID: 8300000, guid: 26a22eb05500f334da9a86f912a89f11, type: 3}
+  - {fileID: 8300000, guid: 0d3e752888491b74e9881d30005de190, type: 3}
+  - {fileID: 8300000, guid: 635323ea11b7a2f41812620203208d6a, type: 3}
+  - {fileID: 8300000, guid: 27bd34d6a966b844680604409236edf1, type: 3}
+  - {fileID: 8300000, guid: 3250a47c190fa7740a51a28b1c981d15, type: 3}
+  - {fileID: 8300000, guid: 962e9445e5da1cb46a5957b77ef660b2, type: 3}
+  - {fileID: 8300000, guid: 0ed11d3ea1c6d0d4db3fe9013d653f8a, type: 3}
+  - {fileID: 8300000, guid: 5c0fbfd0184428c439e1712c0ad7a874, type: 3}

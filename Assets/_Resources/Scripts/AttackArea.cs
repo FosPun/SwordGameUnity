@@ -11,6 +11,7 @@ public class AttackArea : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
+        
         var damagable = other.GetComponent<IDamagale>();
         if (damagable != null)
         {

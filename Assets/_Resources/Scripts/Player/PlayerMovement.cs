@@ -7,11 +7,14 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     public UnityEvent OnJump;
+    public UnityEvent OnLanding;
     
     
     [HideInInspector] public bool isGrounded = true;
     [HideInInspector] public bool isMoving;
     [HideInInspector] public bool jumpTrigger;
+    
+    [HideInInspector] public Collider[] groundColliders;
     
     [Header("Parameters for movement and jump")]
     [SerializeField] private float speed;
@@ -23,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckRadius = 0.2f;
     
     [Header("Model of the Player")]
-    [SerializeField] private GameObject model;
+    [SerializeField] private GameObject model; 
     
     
     private Rigidbody rb;
@@ -34,8 +37,6 @@ public class PlayerMovement : MonoBehaviour
     private bool canMove = true;
     
     private Vector2 moveValue;
-    
-    private Collider[] groundColliders = new Collider[10];
 
     void Awake()
     {
@@ -64,15 +65,29 @@ public class PlayerMovement : MonoBehaviour
         canMove = !canMove;
 
     }
-    public void HitStun(float timeDelay)
+    public void StopMovementOnDuration(float timeDelay)
     {
         StartCoroutine(HitStunCoroutine(timeDelay));
     }
 
     private void CheckGround()
     {
-        groundColliders = Physics.OverlapSphere( new Vector3(transform.position.x, transform.position.y -  groundCheckDistance,transform.position.z) , groundCheckRadius, LayerMask.GetMask("Ground"));
-        isGrounded = groundColliders.Length > 0;
+        groundColliders = 
+            Physics.OverlapSphere(new Vector3
+                (
+                    transform.position.x, transform.position.y -  groundCheckDistance,transform.position.z),
+                    groundCheckRadius,
+                    LayerMask.GetMask("Ground")
+                );
+        if (groundColliders.Length > 0)
+        {
+            isGrounded = true;
+            OnLanding.Invoke();
+        }
+        else
+        {
+            isGrounded = false;
+        }
     }
 
     

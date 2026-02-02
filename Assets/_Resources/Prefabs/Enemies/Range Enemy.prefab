@@ -5665,6 +5665,10 @@ PrefabInstance:
       propertyPath: m_StoppingDistance
       value: 17
       objectReference: {fileID: 0}
+    - target: {fileID: 1108860418560494680, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 1849200808463532965, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_Controller
       value: 
@@ -5742,12 +5746,44 @@ PrefabInstance:
       value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1588120493743353546}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SetTrigger
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: PlaySound
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: SoundController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
       value: Range Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 8300000, guid: f0b12966d2945914886ec59864fca561, type: 3}
+    - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.AudioClip, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4823059343970996711, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: _collider
@@ -5769,6 +5805,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3562792734049676877}
   m_SourcePrefab: {fileID: 100100000, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+--- !u!114 &1588120493743353546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1139971201535867660, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+  m_PrefabInstance: {fileID: 1863327960399828422}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3038194640160018501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07a6abb9f8cb4d3468310c86433b6e56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundController
 --- !u!1 &3038194640160018501 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3743066359732667779, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
@@ -5788,8 +5835,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Bow
   OnShoot:
     m_PersistentCalls:
-      m_Calls: []
-  projectilePrefab: {fileID: 8989132911170028507, guid: 704c2d6433af4d448943d5ff30b6d7ae, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 1588120493743353546}
+        m_TargetAssemblyTypeName: SoundController, Assembly-CSharp
+        m_MethodName: PlaySound
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 8300000, guid: 24252664d1f41c140864d611ea092c18, type: 3}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  projectilePrefab: {fileID: 5202794859961926532, guid: 501ea53fde71f95499630361afc7e3ef, type: 3}
   prefabVelocity: 8
   prefabSpawnPosition: {fileID: 5654006508426795057}
   collectionCheck: 1

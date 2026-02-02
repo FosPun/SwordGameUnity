@@ -11,12 +11,13 @@ public abstract class Ability : MonoBehaviour
     [SerializeField] protected float cooldownTime;
     [SerializeField] protected float duration;
     
-    protected PlayerMovement playerMovement;
+    protected PlayerMovement _playerMovement;
     
     protected float Timer;
     
     protected bool isActive;
-    protected bool abilityTrigger;
+   
+    private bool abilityTrigger;
     
     
     [SerializeField] private string abilityName;
@@ -24,7 +25,7 @@ public abstract class Ability : MonoBehaviour
     private InputAction abilityAction;
     private void Awake()
     {
-        playerMovement = GetComponent<PlayerMovement>();
+        _playerMovement = GetComponent<PlayerMovement>();
         abilityAction = InputSystem.actions.FindAction(abilityName);
         Timer = cooldownTime;
         CooldownPercentage = 1;
@@ -39,6 +40,7 @@ public abstract class Ability : MonoBehaviour
     private void FixedUpdate()
     {
         ReduceCooldown();
+        if(!abilityTrigger || isActive || Timer < cooldownTime) return;
         UseAbility();
     }
 
