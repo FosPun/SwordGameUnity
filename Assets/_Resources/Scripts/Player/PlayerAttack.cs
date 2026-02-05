@@ -1,38 +1,30 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public class PlayerAttack : MonoBehaviour
 {
     public UnityEvent OnAttack;
     
     [SerializeField] private int damage;
+    
+    [SerializeField] private float attackCooldown = 1f;
+    
     [SerializeField] private AttackArea attackArea;
     
-    private bool attackTrigger;
-    private bool isAttacking;
-    private InputAction attack;
-    private Health health;
+    private Health _health;
     
-    void Awake()
+    private bool isAttacking;
+
+    private void Awake()
     {
-        attack = InputSystem.actions.FindAction("Attack");
+        _health = GetComponent<Health>();
     }
 
-    void Update()
-    {
-       GetInput();
-       if (attackTrigger) {Attack();}
-    }
-
-    private void GetInput()
-    {
-        attackTrigger = attack.IsPressed();
-    }
-    private void Attack()
+    public void Attack()
     {   
-        if(isAttacking) return;
+        if(isAttacking || _health.isDead) return;
         OnAttack?.Invoke();
         StartCoroutine(Hit());
     }
@@ -40,8 +32,8 @@ public class PlayerAttack : MonoBehaviour
     private IEnumerator Hit()
     {
         isAttacking = true;
-        attackArea.Damage = damage;
-        yield return new WaitForSeconds(1f); 
+        attackArea.SetDamage(damage);
+        yield return new WaitForSeconds(attackCooldown); 
         isAttacking = false;
     }
 }

@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Enemy
   - FxTemporaire
+  - Weapon
+  - Ground
+  - Concrete
+  - Metal
+  - Grass
   layers:
   - Default
   - TransparentFX

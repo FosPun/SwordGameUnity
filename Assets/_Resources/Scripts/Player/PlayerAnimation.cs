@@ -13,11 +13,26 @@ public class PlayerAnimation : MonoBehaviour
         health = GetComponent<Health>();
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         animator.SetBool("isMoving", playerMovement.isMoving);
         animator.SetBool("isGround", playerMovement.isGrounded);
         animator.SetBool("isDead", health.isDead);
-        if (playerMovement.jumpTrigger && playerMovement.isGrounded) animator.SetTrigger("Jump");
+    }
+
+    private void SetJump()
+    {
+        animator.SetTrigger("Jump");
+    }
+
+    private void OnEnable()
+    {
+        playerMovement.OnJump.AddListener(SetJump);
+    }
+
+    private void OnDisable()
+    {
+        playerMovement.OnJump.RemoveListener(SetJump);
     }
 }
+

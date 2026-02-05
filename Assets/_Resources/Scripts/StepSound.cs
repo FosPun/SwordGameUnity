@@ -4,28 +4,34 @@ public class StepSound : MonoBehaviour
 {
     [SerializeField] private GroundSO[] grounds;
     [SerializeField] private float stepVolume = 1f;
+    [SerializeField] private float groundCheckDistance = 1f;
+    [SerializeField] private float groundCheckRadius = 1f;
 
     private AudioSource _audioSource;
-    private PlayerMovement _playerMovement;
 
     private void Awake()
     {
-        _playerMovement = GetComponent<PlayerMovement>();
         _audioSource = GetComponent<AudioSource>();
     }
 
     public void PlayStepSound()
     {
-        if (_playerMovement.groundColliders.Length <= 0)
+        Collider[] groundColliders = Physics.OverlapSphere(new Vector3
+            (
+                transform.position.x, transform.position.y - groundCheckDistance, transform.position.z),
+            groundCheckRadius,
+            LayerMask.GetMask("Ground")
+        );
+        if ( groundColliders.Length <= 0)
             return;
 
-        string tag = _playerMovement.groundColliders[0].tag;
+        string tag = groundColliders[0].tag;
 
-        foreach (var ground in grounds)
+        foreach (var item in grounds)
         {
-            if (ground.groundTag == tag)
+            if (item.groundTag == tag)
             {
-                _audioSource.PlayOneShot(ground.GetRandomClip(), stepVolume);
+                _audioSource.PlayOneShot(item.GetRandomClip(), stepVolume);
                 return;
             }
         }

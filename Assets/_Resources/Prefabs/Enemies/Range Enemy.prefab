@@ -2723,7 +2723,7 @@ Transform:
   - {fileID: 4389736870787288903}
   - {fileID: 8105431015260866111}
   - {fileID: 3963076240997681548}
-  m_Father: {fileID: 3914035642806618352}
+  m_Father: {fileID: 3677879709110621163}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4226583565787183575
 GameObject:
@@ -5679,11 +5679,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.87
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5791,15 +5791,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4823059343970996711, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+    - {fileID: 1108860418560494680, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
     m_RemovedGameObjects:
     - {fileID: 8589342584272200854, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3629300476902175957}
-    - targetCorrespondingSourceObject: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5654006508426795057}
+    - targetCorrespondingSourceObject: {fileID: 3085435183324235309, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3629300476902175957}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3743066359732667779, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       insertIndex: -1
@@ -5854,6 +5855,11 @@ MonoBehaviour:
   collectionCheck: 1
   defaultCapacity: 3
   maxSize: 5
+--- !u!4 &3677879709110621163 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3085435183324235309, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+  m_PrefabInstance: {fileID: 1863327960399828422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3914035642806618352 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3425739881674677558, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}

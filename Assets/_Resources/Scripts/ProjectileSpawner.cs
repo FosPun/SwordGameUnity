@@ -59,7 +59,7 @@ public class ProjectileSpawner : MonoBehaviour
 
     private void OnDestroyPooledObject(Projectile objectToDestroy)
     {
-        Destroy(objectToDestroy);
+        DestroyImmediate(objectToDestroy);
     }
 
     public void Shoot()

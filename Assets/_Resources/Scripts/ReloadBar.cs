@@ -7,7 +7,7 @@ public class ReloadBar : MonoBehaviour
    [SerializeField] private Image imgBar;
    [SerializeField] private Ability ability;
 
-   private void FixedUpdate()
+   private void LateUpdate()
    {
       imgBar.enabled = !(imgBar.fillAmount >= 1);
       imgBar.fillAmount = ability.CooldownPercentage;

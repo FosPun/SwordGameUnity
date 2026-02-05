@@ -5,21 +5,29 @@ using UnityEngine.Events;
 public class AttackArea : MonoBehaviour
 {
     public UnityEvent OnHit;
-    public int Damage;
     
     [SerializeField] private Collider _collider;
-    
+
+    [SerializeField] private int damage = 1;
     private void OnTriggerEnter(Collider other)
     {
-        
-        var damagable = other.GetComponent<IDamagale>();
+        ApplyDamage(other);
+    }
+
+    public void SetDamage(int damageAmount)
+    {
+        this.damage = damageAmount;
+    }
+    private void ApplyDamage(Collider other)
+    {
+        var damagable = other.GetComponent<IDamageable>();
         if (damagable != null)
         {
-            damagable.TakeDamage(Damage);
+            damagable.TakeDamage(damage);
         }
-        OnHit?.Invoke(); 
+        OnHit?.Invoke();
     }
-    
+
 
     public void ActivateCollider()
     {

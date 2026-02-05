@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 
 public class PlayerMovement : MonoBehaviour
@@ -11,15 +10,18 @@ public class PlayerMovement : MonoBehaviour
     
     
     [HideInInspector] public bool isGrounded = true;
-    [HideInInspector] public bool isMoving;
-    [HideInInspector] public bool jumpTrigger;
-    
     [HideInInspector] public Collider[] groundColliders;
     
-    [Header("Parameters for movement and jump")]
+    [Header("Move parameters")]
+    public bool canMove = true;
+    [HideInInspector] public bool isMoving;
     [SerializeField] private float speed;
+    
+    [Header("Jump parameters")]
     [SerializeField] private float jumpPower;
-    [SerializeField] private float rotationSpeed;
+    [SerializeField] private float jumpBufferTime = 0.1f;
+    
+    private float jumpBufferCounter;
     
     [Header("Parameters for checking Ground")]
     [SerializeField] private float groundCheckDistance;
@@ -31,33 +33,16 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody rb;
     
-    private InputAction move;
-    private InputAction jump;
-
-    private bool canMove = true;
-    
-    private Vector2 moveValue;
-
+    private int groundMask;
     void Awake()
     {
-        move = InputSystem.actions.FindAction("Move");
-        jump = InputSystem.actions.FindAction("Jump");
+        groundMask = LayerMask.GetMask("Ground");
         rb = GetComponent<Rigidbody>();
     }
-
-    void Update()
-    {
-        GetInput();
-    }
-
+    
     private void FixedUpdate()
     {
         CheckGround();
-        
-        if(!canMove) return;
-        Jump();
-        Rotation();
-        Move();
     }
 
     public void SwitchMovement()
@@ -77,47 +62,51 @@ public class PlayerMovement : MonoBehaviour
                 (
                     transform.position.x, transform.position.y -  groundCheckDistance,transform.position.z),
                     groundCheckRadius,
-                    LayerMask.GetMask("Ground")
+                    groundMask
                 );
-        if (groundColliders.Length > 0)
+        bool wasGrounded = isGrounded;
+        isGrounded = groundColliders.Length > 0;
+        if (!wasGrounded && isGrounded)
         {
-            isGrounded = true;
-            OnLanding.Invoke();
+            OnLanding?.Invoke();
+        }
+    }
+
+    
+    public void SetJumpBuffer(bool value)
+    {
+        if (value)
+        {
+            jumpBufferCounter = jumpBufferTime;
         }
         else
         {
-            isGrounded = false;
+            jumpBufferCounter -= Time.deltaTime;
         }
     }
-
     
-    private void GetInput()
+    public void Move(float value)
     {
-        moveValue = move.ReadValue<Vector2>();
-        jumpTrigger = jump.IsPressed();
-    }
-    
-    private void Move()
-    {
-        float targetSpeed = speed * moveValue.x;
+        float targetSpeed = speed * value;
         float speedAmount = targetSpeed - rb.linearVelocity.x;
         rb.AddForce( Vector2.right * speedAmount , ForceMode.VelocityChange);
-        isMoving = Mathf.Abs(moveValue.x) > 0.01f;
+        isMoving = Mathf.Abs(rb.linearVelocity.x) > 0.1f && isGrounded;
 
     }
-    private void Jump()
+    public void Jump()
     {
-        if (!isGrounded || !jumpTrigger) return;
+        if (!isGrounded || jumpBufferCounter <= 0f) return;
+        jumpBufferCounter = 0f;
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0);
-        rb.AddForce( Vector2.up * jumpPower ,ForceMode.Impulse);
+        rb.AddForce( Vector2.up * jumpPower ,ForceMode.VelocityChange);
         OnJump?.Invoke();
     }
     
-    private void Rotation()
+    public void Rotation(float value)
     {
-        if (Mathf.Abs(moveValue.x) < 0.1f || !canMove) return;
+        if (Mathf.Abs(value) < 0.1f || !canMove) return;
         
-        float targetY = moveValue.x > 0 ? 0f : 180f;
+        float targetY = value > 0 ? 0f : 180f;
 
         Quaternion targetRotation = Quaternion.Euler(0f, targetY, 0f);
 
