@@ -13,7 +13,6 @@ namespace _Resources.Scripts.States.SimpleEnemy
         public void Enter()
         {
             Debug.Log(enemy.gameObject.name + " is attacking");
-            enemy.transform.LookAt(enemy.Target.transform);
         }
 
         public void Execute()

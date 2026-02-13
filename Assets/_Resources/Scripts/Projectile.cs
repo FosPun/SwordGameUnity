@@ -10,7 +10,8 @@ public class Projectile : MonoBehaviour
     [SerializeField] private float timeoutDelay = 3f;
     
     private IObjectPool<Projectile> objectPool;
-    
+
+    private bool hit = false;
     // Public property to give the projectile a reference to its ObjectPool
     public IObjectPool<Projectile> ObjectPool
     {
@@ -31,6 +32,8 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (hit) return;
+        hit = true;
         if (particlesOnHit != null)
         {
             Instantiate(particlesOnHit, transform.position, Quaternion.identity);
@@ -41,7 +44,7 @@ public class Projectile : MonoBehaviour
     IEnumerator DeactivateRoutine(float delay)
     {
         yield return new WaitForSeconds(delay);
-        
+        hit = false;
 
         // Release the projectile back to the pool
         objectPool.Release(this);

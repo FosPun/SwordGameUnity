@@ -54,6 +54,7 @@ public class Enemy : MonoBehaviour
         
         private IEnumerator Hit()
         {
+            transform.LookAt(Target.transform);
             isAttacking = true;
             OnAttack?.Invoke();
             yield return new WaitForSeconds(enemySO.attackDuration); 

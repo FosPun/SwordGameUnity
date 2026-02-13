@@ -12,7 +12,7 @@ public class PlayerAnimation : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         health = GetComponent<Health>();
     }
-
+//TODO: delete LateUpdate and add listeners in Events PlayerMovement and e.t.c
     private void LateUpdate()
     {
         animator.SetBool("isMoving", playerMovement.isMoving);

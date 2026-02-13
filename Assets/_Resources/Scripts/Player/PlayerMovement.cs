@@ -27,9 +27,6 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private float groundCheckRadius = 0.2f;
     
-    [Header("Model of the Player")]
-    [SerializeField] private GameObject model; 
-    
     
     private Rigidbody rb;
     
@@ -115,7 +112,6 @@ public class PlayerMovement : MonoBehaviour
     
     private IEnumerator HitStunCoroutine(float time)
     {
-        rb.linearVelocity = Vector3.zero;
         SwitchMovement();
         yield return new WaitForSeconds(time);
         SwitchMovement();    

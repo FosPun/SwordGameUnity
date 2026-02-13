@@ -9,8 +9,8 @@ public class SoundController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
-    public void PlaySound(AudioClip clip)
+    /*public void  PlaySound(AudioClip clip, float volume)
     {
-        audioSource.PlayOneShot(clip);
-    }
+        audioSource.PlayOneShot(clip, volume);
+    }*/
 }

@@ -1,61 +1,21 @@
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.InputSystem;
 
 public abstract class Ability : MonoBehaviour
 {
     public UnityEvent OnAbilityUse;
-
+    public AbilitySO abilitySO;
+    
     public float CooldownPercentage;
-    
-    [SerializeField] protected float cooldownTime;
-    [SerializeField] protected float duration;
-    
-    protected PlayerMovement _playerMovement;
-    
-    protected float Timer;
-    
-    protected bool isActive;
-   
-    private bool abilityTrigger;
-    
-    
-    [SerializeField] private string abilityName;
-    
-    private InputAction abilityAction;
-    private void Awake()
-    {
-        _playerMovement = GetComponent<PlayerMovement>();
-        abilityAction = InputSystem.actions.FindAction(abilityName);
-        Timer = cooldownTime;
-        CooldownPercentage = 1;
-        Init();
-    }
 
-    private void Update()
-    {
-        GetInput();   
-    }
+    protected float timer;
 
-    private void FixedUpdate()
+    public virtual void ReduceCooldown()
     {
-        ReduceCooldown();
-        if(!abilityTrigger || isActive || Timer < cooldownTime) return;
-        UseAbility();
+        if (timer > abilitySO.cooldown + Time.fixedDeltaTime) return;
+        CooldownPercentage = timer / abilitySO.cooldown;
+        timer += Time.deltaTime;
     }
-
-    private void ReduceCooldown()
-    {
-        if (Timer > cooldownTime + Time.fixedDeltaTime) return;
-        CooldownPercentage = Timer / cooldownTime;
-        Timer += Time.deltaTime;
-    }
-    private void GetInput()
-    {
-        abilityTrigger = abilityAction.IsPressed();
-    }
-    protected abstract void UseAbility();
-    protected abstract void Init();
-    
-    
+    public abstract void Init();
+    public abstract void UseAbility();
 }

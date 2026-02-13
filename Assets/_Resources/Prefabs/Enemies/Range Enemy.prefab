@@ -5756,7 +5756,7 @@ PrefabInstance:
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 1588120493743353546}
+      objectReference: {fileID: 3424183536663012947}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -5767,11 +5767,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: PlaySound
+      value: PlayOneShot
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
-      value: SoundController, Assembly-CSharp
+      value: UnityEngine.AudioSource, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 4225234045274411956, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
       propertyPath: OnAttack.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_StringArgument
@@ -5855,6 +5855,11 @@ MonoBehaviour:
   collectionCheck: 1
   defaultCapacity: 3
   maxSize: 5
+--- !u!82 &3424183536663012947 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 3917843743606403989, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}
+  m_PrefabInstance: {fileID: 1863327960399828422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3677879709110621163 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3085435183324235309, guid: 9d135286ae2b02c4a8edfb3677a74b63, type: 3}

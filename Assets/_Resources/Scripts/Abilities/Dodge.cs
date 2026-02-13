@@ -1,36 +1,34 @@
+using System;
 using System.Collections;
 using UnityEngine;
-
 public class Dodge : Ability
 {
-
-    [SerializeField] private GameObject model;
-    
-    private Collider _collider;
+    [SerializeField] private float distance; 
+    [SerializeField] private PlayerMovement _playerMovement;
+    private Collider _collider; 
     private Rigidbody _rigidbody;
+    public override void Init()
+    {
+        timer = abilitySO.cooldown;
+        CooldownPercentage = 1;
+        _collider = _playerMovement.GetComponent<Collider>(); 
+        _rigidbody = _playerMovement.GetComponent<Rigidbody>(); 
+    }
+    public override void UseAbility() 
+    { 
+        if(!_playerMovement.isGrounded || CooldownPercentage < 1) return; 
+        OnAbilityUse?.Invoke(); 
+        timer = 0; 
+        _playerMovement.StartCoroutine(DodgeCoroutine()); 
+    }
 
-    
-    protected override void Init()
-    {
-        _collider = GetComponent<Collider>();
-        _rigidbody = GetComponent<Rigidbody>();
-    }
-    protected override void UseAbility()
-    {
-        if(!_playerMovement.isGrounded) return;
-        OnAbilityUse?.Invoke();
-        Timer = 0;
-        StartCoroutine(DodgeCoroutine());
-    }
     private IEnumerator DodgeCoroutine()
     {
-        
-        isActive = true;
-        _rigidbody.isKinematic = true;
+        _playerMovement.StopMovementOnDuration(abilitySO.duration);
+        _rigidbody.linearVelocity = Vector3.zero;
+        _rigidbody.AddForce(distance * _playerMovement.transform.right, ForceMode.VelocityChange);
         _collider.excludeLayers += LayerMask.GetMask("Enemy","Projectile");
-        yield return new WaitForSeconds(duration);
-        _rigidbody.isKinematic = false;
-        isActive = false;
+        yield return new WaitForSeconds(abilitySO.duration);
         _collider.excludeLayers -= LayerMask.GetMask("Enemy", "Projectile");
     }
 }
