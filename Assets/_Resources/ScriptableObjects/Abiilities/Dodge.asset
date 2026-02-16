@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Dodge
   m_EditorClassIdentifier: Assembly-CSharp::AbilitySO
   abilityName: Dodge
-  cooldown: 3
-  duration: 1
+  cooldown: 2.5
+  duration: 0.8

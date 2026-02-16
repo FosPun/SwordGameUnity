@@ -796,11 +796,27 @@ PrefabInstance:
     m_TransformParent: {fileID: 4653859808970620012}
     m_Modifications:
     - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 609c6c50d8eea69479c22ce931fc859d, type: 3}
+    - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
       propertyPath: m_Color.b
-      value: 0.9657576
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
       propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
+      propertyPath: m_Maskable
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2575676273084134697, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
+      propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5366372788032144450, guid: 3dc0096916d88ce4aa41211cc3d44c5e, type: 3}
@@ -983,6 +999,10 @@ PrefabInstance:
     - target: {fileID: 435156561507226086, guid: 49520cfc79e033c40953a239084783c2, type: 3}
       propertyPath: m_Name
       value: Dodge
+      objectReference: {fileID: 0}
+    - target: {fileID: 2650732099590762770, guid: 49520cfc79e033c40953a239084783c2, type: 3}
+      propertyPath: distance
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 2650732099590762770, guid: 49520cfc79e033c40953a239084783c2, type: 3}
       propertyPath: _playerMovement
